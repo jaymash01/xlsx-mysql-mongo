@@ -71,6 +71,14 @@ INSERT INTO `transactionType` (`id`, `name`) VALUES
 (1, 'Debit'),
 (2, 'Deposit');
 
+CREATE TABLE `rtp` (
+  `id` bigint(20) NOT NULL,
+  `createdAt` timestamp NULL DEFAULT current_timestamp(),
+  `collection` double NOT NULL DEFAULT 0,
+  `payout` double NOT NULL DEFAULT 0,
+  `rtp` double NOT NULL DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
 ALTER TABLE `draw`
   ADD PRIMARY KEY (`id`);
 
@@ -106,3 +114,9 @@ ALTER TABLE `transaction`
 
 ALTER TABLE `transactionType`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+ALTER TABLE `rtp`
+  ADD PRIMARY KEY (`id`);
+
+ALTER TABLE `rtp`
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;

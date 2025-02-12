@@ -31,6 +31,32 @@ def export_draws():
     print("Exported draws successfully...")
 
 
+def export_rtp_calculations():
+    print("Exporting RTP calculations...")
+
+    collection = mongo_connection["rtp"]
+    cursor = mysql_connection.cursor()
+    cursor.execute("select * from rtp order by createdAt asc")
+    rows = cursor.fetchall()
+
+    for row in rows:
+        print(row)
+
+        document = {
+            "__id": row[0],
+            "createdAt": row[1].astimezone(tz=timezone.utc) if row[1] is not None else None,
+            "collection": row[2],
+            "payout": row[3],
+            "rtp": row[4],
+            "_class": "com.fasthub.pesafasta.model.Rtp",
+        }
+
+        collection.insert_one(document)
+
+    cursor.close()
+    print("Exported  RTP calculations successfully...")
+
+
 def export_players():
     print("Exporting players...")
 

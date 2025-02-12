@@ -25,6 +25,24 @@ def import_draws():
     connection.commit()
     print("Imported draws successfully...")
 
+def import_rtp_calculations():
+    print("Importing RTP calculations...")
+    sheet = load_workbook(_path.format("rtp_calculations.xlsx")).active
+    rows = sheet.iter_rows(values_only=True, min_row=2)
+    cursor = connection.cursor()
+
+    for row in rows:
+        print(row)
+        created_date = datetime.strftime(row[0], '%Y-%m-%d %H.%M.%S.%f')
+        sql = "insert ignore into rtp(createdAt, collection, payout, rtp) values (%s, %s, %s, %s)"
+        values = (created_date, row[1], row[2], row[3])
+
+        cursor.execute(sql, values)
+
+    cursor.close()
+    connection.commit()
+    print("Imported RTP calculations successfully...")
+
 
 def import_players():
     print("Importing players...")
