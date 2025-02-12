@@ -9,6 +9,7 @@ _path = "files/{}"
 
 def import_draws():
     print("Importing draws...")
+    
     sheet = load_workbook(_path.format("draw.xlsx")).active
     rows = sheet.iter_rows(values_only=True, min_row=2)
     cursor = connection.cursor()
